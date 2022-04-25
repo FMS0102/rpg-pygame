@@ -1,4 +1,5 @@
 import pygame
+from app.debug import debug
 from app.settings import *
 from app.support import *
 from app.tile import Tile
@@ -64,6 +65,7 @@ class Level:
         # update and draw the game
         self.visible_sprites.custom_draw(self.player)
         self.visible_sprites.update()
+        debug(self.player.status)
 
 
 class YSortCameraGroup(pygame.sprite.Group):
