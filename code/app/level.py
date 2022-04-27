@@ -5,6 +5,7 @@ from app.support import *
 from app.tile import Tile
 from app.player import Player
 from random import choice
+from app.weapon import Weapon
 
 
 class Level:
@@ -16,6 +17,9 @@ class Level:
         # sprites group setup
         self.visible_sprites = YSortCameraGroup()
         self.obstacle_sprites = pygame.sprite.Group()
+
+        # attack sprites
+        self.current_attack = None
 
         # sprite setup
         self.create_map()
@@ -58,7 +62,15 @@ class Level:
                 #         (x, y), [self.visible_sprites], self.obstacle_sprites)
 
         self.player = Player(
-            (2000, 1430), [self.visible_sprites], self.obstacle_sprites)
+            (2000, 1430), [self.visible_sprites], self.obstacle_sprites, self.create_attack, self.destroy_attack)
+
+    def create_attack(self):
+        self.current_attack = Weapon(self.player, [self.visible_sprites])
+
+    def destroy_attack(self):
+        if self.current_attack:
+            self.current_attack.kill()
+        self.create_attack = None
 
     def run(self):
 
